@@ -715,6 +715,8 @@ static int FileStreamRead(void* ptr, uint8_t* buf, int bufSize)
 	IStream* pStream = reinterpret_cast<IStream*>(ptr);
 	ULONG bytesRead = 0;
 
+	// We make a temporary copy array to do our own memcopy
+	// IRandomAccessStream::Read in app service doesn't guarantee data is copied
 	uint8_t* temp = new uint8_t[bufSize];
 	if (temp == nullptr)
 	{
